@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 步骤一：引入echarts文件 -->
+    <script src="./echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 步骤二：准备一个呈现表格的div -->
+    <div style="width: 600px; height: 400px"></div>
+    <script>
+      //步骤三：初始化echarts实例对象
+      //参数，dom，决定图标最终呈现的位置
+      var myCharts = echarts.init(document.querySelector('div'));
+
+      // 步骤四：准备配置项
+      var option = {
+        title: {
+          text: '成绩成绩\n换行了 ',
+          link: 'http://www.baidu.com',
+          textStyle: {
+            color: 'red',
+          },
+        },
+        xAxis: {
+          type: 'category',
+          data: ['小明', '小红', '小王'],
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            name: '语文',
+            type: 'bar',
+            data: [70, 80, 90],
+          },
+        ],
+      };
+      //步骤五：将配置项设置给echarts实例化对象
+      myCharts.setOption(option);
+    </script>
+  </body>
+</html>

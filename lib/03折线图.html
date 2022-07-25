@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 步骤一：引入echarts文件 -->
+    <script src="./echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 步骤二：准备一个呈现表格的div -->
+    <div style="width: 600px; height: 400px"></div>
+    <script>
+      //步骤三：初始化echarts实例对象
+      //参数，dom，决定图标最终呈现的位置
+      var myCharts = echarts.init(document.querySelector('div'));
+      var xDataArr = [
+        '1月',
+        '2月',
+        '3月',
+        '4月',
+        '5月',
+        '6月',
+        '7月',
+        '8月',
+        '9月',
+        '10月',
+        '11月',
+        '12月',
+      ];
+      var yDataArr1 = [
+        3000, 2800, 900, 1000, 800, 700, 1400, 1300, 900, 1000, 800, 600,
+      ];
+      yDataArr2 = [
+        900, 1000, 800, 700, 1300, 900, 1400, 1000, 1250, 1380, 1100, 800,
+      ];
+      // 步骤四：准备配置项
+      var option = {
+        xAxis: {
+          type: 'category',
+          data: xDataArr,
+          boundaryGap: false, // 紧挨边缘  默认值为true
+        },
+        yAxis: {
+          type: 'value',
+          scale: true, //不从0开始 (图例0值比例)
+        },
+        series: [
+          {
+            name: '康师傅销量',
+            type: 'line',
+            data: yDataArr1,
+            stack: 'all', //堆叠图 名称相同
+            areaStyle: {},
+            //最大最小值
+            markPoint: {
+              data: [
+                { type: 'max', name: '最大值' },
+                { type: 'min', name: '最小值' },
+              ],
+            },
+            //平均值
+            markLine: {
+              data: [
+                {
+                  type: 'average',
+                },
+              ],
+            },
+            //标注区间
+            markArea: {
+              data: [
+                [{ xAxis: '1月' }, { xAxis: '2月' }],
+                [{ xAxis: '7月' }, { xAxis: '8月' }],
+              ],
+            },
+            //线条变平滑
+            smooth: true,
+            //线条样式
+            lineStyle: {
+              color: 'black',
+              type: 'solid', // dashed虚线  dotted点状线  solid实线
+            },
+            //填充样式
+            areaStyle: {
+              color: 'pink',
+            },
+          },
+          {
+            name: '白象销量',
+            type: 'line',
+            data: yDataArr2,
+            stack: 'all', //堆叠图  名称相同
+            areaStyle: {},
+          },
+        ],
+      };
+      //步骤五：将配置项设置给echarts实例化对象
+      myCharts.setOption(option);
+    </script>
+  </body>
+</html>
