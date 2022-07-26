@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 步骤一：引入echarts文件 -->
+    <script src="./echarts.min.js"></script>
+    <script src="./jquery.min.js"></script>
+  </head>
+  <body>
+    <!-- 步骤二：准备一个呈现表格的div -->
+    <div style="width: 600px; height: 400px"></div>
+    <script>
+      //步骤三：初始化echarts实例对象
+      //参数，dom，决定图标最终呈现的位置
+      var myCharts = echarts.init(document.querySelector('div'));
+      var airData = [
+        { name: '北京', value: 39.92 },
+        { name: '天津', value: 39.13 },
+        { name: '上海', value: 31.22 },
+        { name: '重庆', value: 66 },
+        { name: '河北', value: 147 },
+        { name: '河南', value: 113 },
+        { name: '云南', value: 25.04 },
+        { name: '辽宁', value: 50 },
+        { name: '黑龙江', value: 114 },
+        { name: '湖南', value: 175 },
+        { name: '安徽', value: 117 },
+        { name: '山东', value: 92 },
+        { name: '新疆', value: 84 },
+        { name: '江苏', value: 67 },
+        { name: '浙江', value: 84 },
+        { name: '江西', value: 96 },
+        { name: '湖北', value: 273 },
+        { name: '广西', value: 59 },
+        { name: '甘肃', value: 99 },
+        { name: '山西', value: 39 },
+        { name: '内蒙古', value: 58 },
+        { name: '陕西', value: 61 },
+        { name: '吉林', value: 51 },
+        { name: '福建', value: 29 },
+        { name: '贵州', value: 71 },
+        { name: '广东', value: 38 },
+        { name: '青海', value: 57 },
+        { name: '西藏', value: 24 },
+        { name: '四川', value: 58 },
+        { name: '宁夏', value: 52 },
+        { name: '海南', value: 54 },
+        { name: '台湾', value: 88 },
+        { name: '香港', value: 66 },
+        { name: '澳门', value: 77 },
+        { name: '南海诸岛', value: 55 },
+      ];
+      $.get('json/map/china.json', function (ret) {
+        console.log(ret);
+        echarts.registerMap('chinaMap', ret);
+        // 步骤四：准备配置项
+        var option = {
+          geo: {
+            type: 'map',
+            map: 'chinaMap',
+            roam: true, //地图课缩放和拖动
+            label: {
+              show: true, //名称显示
+            },
+            // zoom: 2, // 初始化大小缩放
+            // center: [87.617733, 43792818],//设置中心点
+          },
+          series: [
+            {
+              data: airData,
+              geoIndex: 0, //将空气质量的数据与第0个geo关联起来
+              type: 'map',
+            },
+          ],
+          visualMap: {
+            min: 0,
+            max: 300,
+            inRange: {
+              color: ['white', 'red'], //控制颜色渐变的范围
+            },
+            calculable: true, //出现滑块可以筛选
+          },
+        };
+        //步骤五：将配置项设置给echarts实例化对象
+        myCharts.setOption(option);
+      });
+    </script>
+  </body>
+</html>

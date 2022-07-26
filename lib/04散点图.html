@@ -552,13 +552,19 @@
         },
         series: [
           {
-            type: 'scatter',
+            // type: 'scatter',//散点图
+            type:'effectScatter',//涟漪动画
+            showEffectOn:'emphasis',// render 一直产生涟漪动画  emphasis 鼠标移入是产生涟漪动画
+            rippleEffect:{
+              scale: 10 // 涟漪动画的范围
+            },
             data: axisData, //重点是二维数组的转化以及xAxis和yAxis的type值为value
             symbolSize: function (arg) {
-              //   console.log(arg);
+                console.log(arg);
               var height = arg[0] / 100;
               var width = arg[1];
-              var bmi = weight / (height * height);
+              var heights = height * height;
+              var bmi = width / heights;
               if (bmi > 28) {
                 return 30;
               }
@@ -568,7 +574,7 @@
               color: function (arg) {
                 var height = arg.data[0] / 100;
                 var width = arg.data[1];
-                var bmi = weight / (height * height);
+                var bmi = width / (height * height);
                 if (bmi > 28) {
                   return 'red';
                 }
